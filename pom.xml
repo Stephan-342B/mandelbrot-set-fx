@@ -17,7 +17,10 @@
 	<description>Mandelbrot Set on JavaFx</description>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -70,6 +73,24 @@
 					<source>11</source>
 					<target>11</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>nl.geodienstencentrum.maven</groupId>
+				<artifactId>sass-maven-plugin</artifactId>
+				<version>3.7.2</version>
+				<configuration>
+					<sassSourceDirectory>${basedir}/src/main/resources/sass/</sassSourceDirectory>
+					<destination>${project.build.outputDirectory}/compiled-css/</destination>
+				</configuration>
+				<executions>
+					<execution>
+						<id>update-stylesheets</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>update-stylesheets</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

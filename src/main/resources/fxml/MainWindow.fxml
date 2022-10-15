@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.canvas.Canvas?>
-<Pane fx:id="pane"  xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mahefa.mandelbrotsetfx.controller.MainWindowController">
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Label?>
+
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mahefa.mandelbrotsetfx.controller.MainWindowController">
    <children>
       <Canvas fx:id="canvas" width="1200" height="800"></Canvas>
+      <Label AnchorPane.topAnchor="25.0" AnchorPane.leftAnchor="10.0" fx:id="iteration"></Label>
+      <Label AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="10.0" fx:id="zoom"></Label>
    </children>
-</Pane>
+</AnchorPane>

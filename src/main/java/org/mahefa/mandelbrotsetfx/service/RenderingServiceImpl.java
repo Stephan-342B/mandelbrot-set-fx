@@ -1,36 +1,46 @@
 package org.mahefa.mandelbrotsetfx.service;
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RenderingServiceImpl implements RenderingService {
 
-    private final static int MAX_ITERATION = 80;
-
     private int width, height;
 
-    // Boundaries
+    @Value("${max.iteration}")
+    private int maxIteration;
+
+    // Image boundaries [x, y]
     private double[] real = { -2d, 1d };
     private double[] image = { -1d, 1d };
 
     @Override
-    public void render(Canvas canvas) {
+    public void render(Canvas canvas, Label label) {
         width = (int) canvas.getWidth();
         height = (int) canvas.getHeight();
 
+        // Set label
+        label.setText("Iteration: " + maxIteration);
+
+        // Pixel writer
         PixelWriter pixelWriter = canvas.getGraphicsContext2D().getPixelWriter();
 
+        // For each pixel: convert it to real-imaginary plane
         for(int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
-                // Convert pixel to real-imaginary plane
                 final int value = calculatePoint(
                         real[0] + (1.0 * x / width) * (real[1] - real[0]),
                         image[0] + (1.0 * y / height) * (image[1] - image[0])
                 );
-                pixelWriter.setColor(x, y, colorHSB(value));
+
+                // Color the current pixel located at the position x and y
+                pixelWriter.setColor(x, y, colorMap( maxIteration / 2, maxIteration - 1, 5, value));
+//                pixelWriter.setColor(x, y, colorHSB( value));
             }
         }
     }
@@ -38,6 +48,7 @@ public class RenderingServiceImpl implements RenderingService {
     /**
      * Iterate f(z) = z^2 + c | z(n + 1) = zn^2 + c | z(0) = 0
      * Where C is a complex number of the form a + bi (i is the imaginary number)
+     *
      * @param x
      * @param y
      * @return
@@ -48,7 +59,7 @@ public class RenderingServiceImpl implements RenderingService {
 
         int i = 0;
 
-        for(; i < MAX_ITERATION; i++) {
+        for(; i < maxIteration; i++) {
             double nx = (x * x) - (y * y) + cx; // Real part
             double ny = (2 * x * y) + cy; // Imaginary part
             x = nx;
@@ -63,9 +74,9 @@ public class RenderingServiceImpl implements RenderingService {
     }
 
     private Color colorHSB(int i) {
-        final int hue = (360 * i / MAX_ITERATION);
-        final int saturation = 1;
-        final int brightness = (i < MAX_ITERATION) ? 1 : 0;
+        final double hue = (360 * i / maxIteration);
+        final double saturation = 1;
+        final double brightness = (i < maxIteration) ? 1 : 0;
 
         return Color.hsb(hue, saturation, brightness);
     }
@@ -113,5 +124,15 @@ public class RenderingServiceImpl implements RenderingService {
         } else {
             return Color.rgb(0, 0, 0);
         }
+    }
+
+    private Color colorMap(float hueFrom, float hueTo, int n, int i) {
+        double hueRange = hueTo - hueFrom;
+        double stepHue = hueRange / n;
+        double hue = hueFrom + i * stepHue;
+        final double saturation = 1;
+        final double brightness = (i < maxIteration) ? 1 : 0;
+
+        return Color.hsb(hue, saturation, brightness);
     }
 }

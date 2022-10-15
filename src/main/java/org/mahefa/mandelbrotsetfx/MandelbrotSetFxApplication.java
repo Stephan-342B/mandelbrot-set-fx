@@ -24,6 +24,7 @@ public class MandelbrotSetFxApplication extends Application {
 		Application.setUserAgentStylesheet(Application.STYLESHEET_CASPIAN);
 
 		Scene scene = new Scene(rootNode);
+		scene.getStylesheets().add(getClass().getResource("/compiled-css/style.css").toExternalForm());
 
 		stage.setTitle("Mandelbrot Set Fx");
 		stage.setScene(scene);

@@ -2,7 +2,10 @@ package org.mahefa.mandelbrotsetfx.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
 import org.mahefa.mandelbrotsetfx.service.RenderingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,27 +17,32 @@ public class MainWindowController {
     private RenderingService renderingService;
 
     @FXML
+    AnchorPane anchorPane;
+
+    @FXML
     Canvas canvas;
 
-    private double[] real = { -2d, 1d };
-    private double[] image = { -1d, 1d };
+    @FXML
+    Label iteration, zoom;
 
     @FXML
     private void initialize() {
-        renderingService.render(canvas);
+        zoom.setText("Zoom: 0");
+        renderingService.render(canvas, iteration);
 
         // Event
         canvas.addEventHandler(ScrollEvent.SCROLL, event -> {
-            double cr = real[0] + (real[1] - real[0]) * event.getMultiplierX() / event.getDeltaX();
-            double ci = image[0] + (image[1] - image[0]) * event.getMultiplierX() / event.getDeltaX();
-
-            double tmpMinR = cr - (real[1] - real[0]) / 2 / 0.5;
-            real[1] = cr + (real[1] - real[0]) / 2 / 0.5;
-            real[0] = tmpMinR;
-
-            double tmpMinI = ci - (image[1] - image[0]) / 2 / 0.5;
-            image[1] = ci + (image[1] - image[0]) / 2 / 0.5;
-            image[0] = tmpMinI;
+            canvas.setScaleX(canvas.getScaleX() + event.getDeltaX());
+            canvas.setScaleY(canvas.getScaleY() + event.getDeltaY());
         });
+    }
+
+    private Slider prepareSlider() {
+        Slider slider = new Slider();
+        slider.setMax(1500);
+        slider.setMin(10);
+        slider.setPrefWidth(300d);
+
+        return slider;
     }
 }
