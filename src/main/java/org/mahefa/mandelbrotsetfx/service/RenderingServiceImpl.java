@@ -30,7 +30,7 @@ public class RenderingServiceImpl implements RenderingService {
                         real[0] + (1.0 * x / width) * (real[1] - real[0]),
                         image[0] + (1.0 * y / height) * (image[1] - image[0])
                 );
-                pixelWriter.setColor(x, y, colorMapHsb(value));
+                pixelWriter.setColor(x, y, colorMap(value));
             }
         }
     }
