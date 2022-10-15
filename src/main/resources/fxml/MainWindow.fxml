@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.canvas.Canvas?>
+<Pane fx:id="pane"  xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mahefa.mandelbrotsetfx.controller.MainWindowController">
+   <children>
+      <Canvas fx:id="canvas" width="1200" height="800"></Canvas>
+   </children>
+</Pane>
