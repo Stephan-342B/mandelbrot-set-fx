@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mahefa.mandelbrotsetfx.controller.MainWindowController">
+
+
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.mahefa.mandelbrotsetfx.controller.MainWindowController" prefWidth="800" prefHeight="600">
    <children>
-      <Canvas fx:id="canvas" width="1200" height="800"></Canvas>
-      <Label AnchorPane.topAnchor="25.0" AnchorPane.leftAnchor="10.0" fx:id="iteration"></Label>
-      <Label AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="10.0" fx:id="zoom"></Label>
+      <Canvas fx:id="canvas" width="${anchorPane.prefWidth}" height="${anchorPane.prefHeight}"></Canvas>
+      <Label fx:id="iteration" AnchorPane.topAnchor="25.0" AnchorPane.leftAnchor="10.0"></Label>
+      <Label fx:id="zoom" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="10.0"></Label>
    </children>
 </AnchorPane>
